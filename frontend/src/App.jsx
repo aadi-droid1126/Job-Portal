@@ -1,10 +1,7 @@
-import MainLayout from "./assets/layouts/MainLayout";
-import AppRoutes from "./assets/routes/AppRoutes";
-
 export default function App() {
   return (
-    <MainLayout>
-      <AppRoutes />
-    </MainLayout>
+    <div className="min-h-screen flex items-center justify-center bg-black text-white text-4xl font-bold">
+      Tailwind is Working 🚀
+    </div>
   );
 }
