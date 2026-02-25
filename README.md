@@ -1,84 +1,77 @@
-const { spawn } = require("child_process");
-const http = require("http");
-const path = require("path");
+![MERN](https://img.shields.io/badge/Stack-MERN-green)
+![Status](https://img.shields.io/badge/Status-Active-blue)
+![License](https://img.shields.io/badge/License-MIT-yellow)
+![Made By](https://img.shields.io/badge/Made%20By-Aditya%20Sharma-orange)
 
-const isWin = process.platform === "win32";
-const npmCmd = isWin ? "npm.cmd" : "npm";
-const FRONTEND_URL = "http://localhost:5173";
+# 💼 Job Portal Web App (MERN Stack)
 
-const children = [];
-let shuttingDown = false;
+A full-stack job portal built using the MERN stack that simulates real-world hiring workflows including authentication, role-based dashboards, job postings, and application tracking.
 
-const run = (name, cwd, args) => {
-const child = spawn(npmCmd, args, {
-cwd,
-shell: false,
-stdio: "pipe",
-});
+This project demonstrates production-ready backend architecture, secure authentication, and scalable full-stack design — built for learning and portfolio showcase.
 
-child.stdout.on("data", (chunk) => process.stdout.write(`[${name}] ${chunk}`));
-child.stderr.on("data", (chunk) => process.stderr.write(`[${name}] ${chunk}`));
+---
 
-child.on("exit", (code) => {
-if (!shuttingDown && code !== 0) {
-console.error(`[${name}] exited with code ${code}`);
-shutdown(code || 1);
-}
-});
+## ✨ Features
 
-children.push(child);
-return child;
-};
+- 🔐 JWT Authentication (Login / Register)
+- 👥 Role-Based Access (Applicant / Recruiter)
+- 📝 Recruiter Job Posting System
+- 📩 Job Application Workflow
+- 📊 Recruiter Dashboard
+- 🔒 Protected Backend APIs
+- ⚡ RESTful Architecture
+- 🧩 Modular Code Structure
 
-const shutdown = (code = 0) => {
-if (shuttingDown) return;
-shuttingDown = true;
+---
 
-for (const child of children) {
-if (!child.killed) {
-child.kill();
-}
-}
+## 🛠 Tech Stack
 
-setTimeout(() => process.exit(code), 200);
-};
+### 🎨 Frontend
 
-process.on("SIGINT", () => shutdown(0));
-process.on("SIGTERM", () => shutdown(0));
+- React (Vite)
+- React Router DOM
+- Axios
+- Modern Component-Based UI
 
-const backendDir = path.join(process.cwd(), "backend");
-const frontendDir = path.join(process.cwd(), "frontend");
+### ⚙️ Backend
 
-run("backend", backendDir, ["run", "dev"]);
-run("frontend", frontendDir, ["run", "dev"]);
+- Node.js
+- Express.js
+- MongoDB
+- Mongoose
+- JWT Authentication
+- Middleware-based Authorization
 
-const openBrowser = () => {
-let opener;
+### ☁️ Database
 
-if (process.platform === "win32") {
-opener = spawn("cmd", ["/c", "start", "", FRONTEND_URL], { stdio: "ignore", detached: true });
-} else if (process.platform === "darwin") {
-opener = spawn("open", [FRONTEND_URL], { stdio: "ignore", detached: true });
-} else {
-opener = spawn("xdg-open", [FRONTEND_URL], { stdio: "ignore", detached: true });
-}
+- MongoDB Atlas (Cloud Ready)
 
-opener.on("error", () => {
-console.warn(`[browser] Could not auto-open browser. Visit ${FRONTEND_URL}`);
-});
+---
 
-opener.unref();
-};
+## 📂 Project Structure
 
-const waitForFrontend = () => {
-const req = http.get(FRONTEND_URL, () => {
-req.destroy();
-openBrowser();
-});
+Job-Portal/
+├── backend/ # Express REST API
+├── frontend/ # React Client
+├── scripts/ # Optional utilities
+├── .gitignore
+├── package-lock.json
+├── package.json # Root config
+└── README.md
 
-req.on("error", () => {
-setTimeout(waitForFrontend, 500);
-});
-};
+---
 
-waitForFrontend();
+## 📸 Screenshots
+
+> Add screenshots here after deployment
+
+---
+
+## ⚙️ Getting Started
+
+### 1️⃣ Clone the Repository
+
+```bash
+git clone https://github.com/aadi-droid1126/job-portal.git
+cd job-portal
+```

@@ -4,10 +4,10 @@
   "version": "1.0.0",
   "scripts": {
     "install:all": "npm --prefix backend install && npm --prefix frontend install",
+    "doctor": "node scripts/doctor.js",
     "dev": "concurrently -k -n BACKEND,FRONTEND,BROWSER -c cyan,green,magenta \"npm --prefix backend run dev\" \"npm --prefix frontend run dev\" \"wait-on tcp:5173 && open http://localhost:5173\""
   },
   "devDependencies": {
-    "concurrently": "^9.2.1",
     "open": "^10.2.0",
     "wait-on": "^8.0.5"
   }

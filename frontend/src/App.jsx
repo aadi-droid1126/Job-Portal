@@ -1,5 +1,5 @@
-import MainLayout from "./layouts/MainLayout";
-import AppRoutes from "./routes/AppRoutes";
+import MainLayout from "./assets/layouts/MainLayout";
+import AppRoutes from "./assets/routes/AppRoutes";
 
 export default function App() {
   return (
