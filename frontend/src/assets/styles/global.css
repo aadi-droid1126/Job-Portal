@@ -1,0 +1,79 @@
+:root {
+  font-family: Inter, Arial, sans-serif;
+  color: #0f172a;
+  background: #f8fafc;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+.nav,
+.footer,
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.nav {
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.nav a,
+.link-button {
+  margin-left: 0.75rem;
+}
+
+.brand {
+  font-weight: 700;
+}
+
+.container {
+  padding: 1rem;
+  min-height: calc(100vh - 120px);
+}
+
+.card {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 1rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem;
+}
+
+.form {
+  max-width: 420px;
+  margin: 2rem auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+input,
+select,
+textarea,
+button {
+  padding: 0.6rem;
+}
+
+.error {
+  color: #b91c1c;
+}
+
+.footer {
+  text-align: center;
+  padding: 1rem;
+}
