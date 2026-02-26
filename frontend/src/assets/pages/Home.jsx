@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import JobCard from "../components/JobCard";
-import api from "../api/axios.jsx";
+import api from "../api/axios.js";
 import SkeletonCard from "../components/SkeletonCard";
 
 export default function Home() {
