@@ -3,9 +3,9 @@
 ![License](https://img.shields.io/badge/License-MIT-yellow)
 ![Made By](https://img.shields.io/badge/Made%20By-Aditya%20Sharma-orange)
 
-# 💼 Job Portal — Full Stack MERN Application
+# 💼 # 🚀 HireFlow — Modern MERN Job Platform
 
-A **production-style job portal** built with the MERN stack that simulates real-world hiring workflows including recruiter dashboards, live search, personalized job saving, and polished UX interactions.
+A **production-style hiring platform named HireFlow** built with the MERN stack that simulates real-world hiring workflows including recruiter dashboards, live search, personalized job saving, and polished UX interactions.
 
 Designed as a **portfolio-grade full-stack system** showcasing scalable backend architecture, secure authentication, and modern frontend UX patterns.
 
@@ -175,9 +175,9 @@ GitHub: https://github.com/aadi-droid1126
 LinkedIn: https://linkedin.com/in/aaditya-sharma-/
 💼 Resume Bullet
 
-Full-stack MERN Job Portal
+Full-stack MERN HireFlow
 
-Built a production-style job portal with recruiter dashboards, live search, skeleton loaders, and personalized workflows using MERN stack, implementing JWT authentication and modular backend architecture.
+Built HireFlow—a production-style job platform with recruiter dashboards, live search, skeleton loaders, and personalized workflows using the MERN stack, implementing JWT authentication and modular backend architecture.
 
 ---
 

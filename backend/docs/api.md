@@ -1,4 +1,4 @@
-# Job Portal API
+# HireFlow API
 
 Base URL: `http://localhost:5000/api`
 

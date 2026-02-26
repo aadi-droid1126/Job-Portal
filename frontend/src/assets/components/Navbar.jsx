@@ -15,7 +15,7 @@ export default function Navbar() {
   return (
     <nav className="nav">
       <Link to="/" className="brand">
-        Job Portal
+        HireFlow
       </Link>
 
       <div>
