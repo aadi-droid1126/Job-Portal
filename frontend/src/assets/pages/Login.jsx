@@ -1,34 +1,84 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api/axios";
-import { useAuth } from "../hooks/useAuth";
+import { useAuth } from "../context/AuthContext";
+import toast from "react-hot-toast"; // ⭐ NEW
 
 export default function Login() {
-  const [form, setForm] = useState({ email: "", password: "" });
-  const [error, setError] = useState("");
-  const navigate = useNavigate();
   const { login } = useAuth();
+  const navigate = useNavigate();
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+  });
+
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleChange = (key, value) => {
+    setForm((prev) => ({ ...prev, [key]: value }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     setError("");
+    setLoading(true);
 
     try {
       const { data } = await api.post("/auth/login", form);
-      login(data);
-      navigate("/dashboard");
+
+      const token = data.token || data?.data?.token;
+      const role = data.user?.role || data.role;
+
+      if (!token) throw new Error("Invalid server response");
+
+      login({ token, role });
+
+      // ⭐ Success toast
+      toast.success("Welcome back 🎉");
+
+      navigate("/");
     } catch (err) {
-      setError(err.response?.data?.message || "Login failed");
+      console.error(err);
+
+      const message =
+        err.response?.data?.message || err.message || "Login failed";
+
+      setError(message);
+
+      // ⭐ Error toast
+      toast.error(message);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <form className="card form" onSubmit={handleSubmit}>
+    <div className="card form">
       <h1>Login</h1>
-      <input placeholder="Email" type="email" required onChange={(e) => setForm({ ...form, email: e.target.value })} />
-      <input placeholder="Password" type="password" required onChange={(e) => setForm({ ...form, password: e.target.value })} />
-      {error && <p className="error">{error}</p>}
-        <button type="submit">Login</button>
+
+      <form onSubmit={handleSubmit}>
+        <input
+          placeholder="Email"
+          type="email"
+          required
+          onChange={(e) => handleChange("email", e.target.value)}
+        />
+
+        <input
+          placeholder="Password"
+          type="password"
+          required
+          onChange={(e) => handleChange("password", e.target.value)}
+        />
+
+        {error && <p className="error">{error}</p>}
+
+        <button type="submit" disabled={loading}>
+          {loading ? "Signing in..." : "Login"}
+        </button>
       </form>
-    );
-  }
+    </div>
+  );
+}

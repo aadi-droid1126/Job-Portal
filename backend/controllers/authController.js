@@ -1,31 +1,97 @@
-const { loginUser, registerUser } = require("../services/authService");
+const bcrypt = require("bcryptjs");
+const User = require("../models/User");
+const generateToken = require("../utils/generateToken");
 
-exports.register = async (req, res, next) => {
+// ================= REGISTER =================
+exports.register = async (req, res) => {
   try {
-    const result = await registerUser(req.body);
+    const { name, email, password, role } = req.body;
 
-    if (result.error) {
-      return res.status(result.status).json({ message: result.error });
+    // Validation
+    if (!name || !email || !password || !role) {
+      return res.status(400).json({
+        message: "name, email, password, and role are required.",
+      });
     }
 
-    return res.status(result.status).json(result.data);
-  } catch (error) {
-    return next(error);
+    // Check existing user
+    const userExists = await User.findOne({ email });
+    if (userExists) {
+      return res.status(400).json({
+        message: "User already exists.",
+      });
+    }
+
+    // Hash password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    // Create user (THIS FIXES YOUR BUG)
+    const user = await User.create({
+      name,
+      email,
+      password: hashedPassword,
+      role: role || "applicant",
+    });
+
+    res.status(201).json({
+      token: generateToken(user),
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+      },
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      message: "Server error during registration",
+    });
   }
 };
 
-exports.login = async (req, res, next) => {
+// ================= LOGIN =================
+exports.login = async (req, res) => {
   try {
-    const result = await loginUser(req.body);
+    const { email, password } = req.body;
 
-    if (result.error) {
-      return res.status(result.status).json({ message: result.error });
+    // Validation
+    if (!email || !password) {
+      return res.status(400).json({
+        message: "Email and password required.",
+      });
     }
 
-    return res.status(result.status).json(result.data);
-  } catch (error) {
-    return next(error);
+    // Find user
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(400).json({
+        message: "Invalid credentials.",
+      });
+    }
+
+    // Compare password
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(400).json({
+        message: "Invalid credentials.",
+      });
+    }
+
+    res.json({
+      token: generateToken(user),
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+      },
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      message: "Server error during login",
+    });
   }
 };
-
-exports.me = (req, res) => res.json(req.user);

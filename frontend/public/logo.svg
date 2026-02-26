@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <defs>
+    <linearGradient id="g" x1="0" x2="1">
+      <stop offset="0%" stop-color="#6366f1"/>
+      <stop offset="100%" stop-color="#22d3ee"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="120" height="120" rx="26" fill="#0f172a"/>
+  
+  <text x="60" y="78"
+        font-size="60"
+        text-anchor="middle"
+        fill="url(#g)"
+        font-family="Inter, sans-serif"
+        font-weight="900">
+    JP
+  </text>
+</svg>

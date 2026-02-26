@@ -11,25 +11,35 @@ connectDB();
 
 const app = express();
 
-// Middleware
-app.use(cors());
+// ================= Middleware =================
+
+// 🌐 CORS (safe for Render + local dev)
+app.use(
+  cors({
+    origin: process.env.CLIENT_URL || "*",
+    credentials: true,
+  }),
+);
+
 app.use(express.json());
 
-// Health route
+// ================= Health Route =================
+// Render uses this to keep service alive
 app.get("/", (req, res) => {
-  res.send("API running...");
+  res.status(200).send("API running...");
 });
 
-// Routes
+// ================= Routes =================
 app.use("/api/auth", require("./routes/authRoutes"));
-app.use("/api/users", require("./routes/userRoutes")); // added
+app.use("/api/users", require("./routes/userRoutes"));
 app.use("/api/jobs", require("./routes/jobRoutes"));
 app.use("/api/applications", require("./routes/applicationRoutes"));
 
-// Error Handling Middleware (MUST be last)
+// ================= Error Middleware =================
 app.use(notFound);
 app.use(errorHandler);
 
+// ================= Server =================
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => console.log(`Server running on ${PORT}`));
+app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));

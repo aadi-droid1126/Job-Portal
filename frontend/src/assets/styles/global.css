@@ -1,7 +1,7 @@
 :root {
   font-family: Inter, Arial, sans-serif;
-  color: #0f172a;
-  background: #f8fafc;
+  color: #e5e7eb;
+  background: #020617;
 }
 
 * {
@@ -10,8 +10,10 @@
 
 body {
   margin: 0;
+  background: #020617;
 }
 
+/* Layout */
 .nav,
 .footer,
 .container {
@@ -20,40 +22,64 @@ body {
   width: 100%;
 }
 
+/* Navbar */
 .nav {
   padding: 1rem;
   display: flex;
   justify-content: space-between;
   gap: 1rem;
+  background: #020617;
+  border-bottom: 1px solid #1e293b;
 }
 
 .nav a,
 .link-button {
   margin-left: 0.75rem;
+  color: #e5e7eb;
+  transition: opacity 0.2s ease;
+}
+
+.nav a:hover {
+  opacity: 0.7;
 }
 
 .brand {
   font-weight: 700;
+  color: #22c55e;
 }
 
+/* Page container */
 .container {
   padding: 1rem;
   min-height: calc(100vh - 120px);
 }
 
+/* Cards */
 .card {
-  background: #fff;
-  border: 1px solid #e2e8f0;
-  border-radius: 10px;
+  background: #0f172a;
+  border: 1px solid #1e293b;
+  border-radius: 12px;
   padding: 1rem;
+  color: #e5e7eb;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
+/* ✨ Card hover lift */
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+}
+
+/* Grid */
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 1rem;
 }
 
+/* Forms */
 .form {
   max-width: 420px;
   margin: 2rem auto;
@@ -62,18 +88,91 @@ body {
   gap: 0.75rem;
 }
 
+/* Inputs */
 input,
 select,
-textarea,
+textarea {
+  padding: 0.6rem;
+  background: #020617;
+  color: #e5e7eb;
+  border: 1px solid #334155;
+  border-radius: 6px;
+  transition:
+    border 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: #22c55e;
+  box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.2);
+}
+
+/* Buttons */
 button {
   padding: 0.6rem;
+  background: #22c55e;
+  color: #020617;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    transform 0.15s ease,
+    background 0.2s ease;
 }
 
+button:hover {
+  background: #16a34a;
+  transform: translateY(-1px);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+/* Errors */
 .error {
-  color: #b91c1c;
+  color: #f87171;
 }
 
+/* Footer */
 .footer {
   text-align: center;
   padding: 1rem;
+  color: #94a3b8;
+}
+
+/* ============================= */
+/* ✨ SKELETON SYSTEM */
+/* ============================= */
+
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background: #1e293b;
+}
+
+.skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.08),
+    transparent
+  );
+  animation: shimmer 1.4s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
 }

@@ -1,45 +1,55 @@
-import { createContext, useContext, useEffect, useState } from "react";
-import api from "../api/axios";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
 
 const AuthContext = createContext(null);
 
-export function AuthProvider({ children }) {
+export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [ready, setReady] = useState(false); // prevents flicker
 
+  // Restore session on refresh
   useEffect(() => {
-    const bootstrapAuth = async () => {
-      try {
-        const token = localStorage.getItem("token");
-        if (!token) {
-          return;
-        }
+    const token = localStorage.getItem("token");
+    const role = localStorage.getItem("role");
 
-        const { data } = await api.get("/auth/me");
-        setUser(data);
-      } catch {
-        localStorage.removeItem("token");
-      } finally {
-        setLoading(false);
-      }
-    };
+    if (token) {
+      setUser({ token, role: role || null });
+    }
 
-    bootstrapAuth();
+    setReady(true);
   }, []);
 
-  const login = ({ token, user: userData }) => {
+  const login = ({ token, role }) => {
     localStorage.setItem("token", token);
-    setUser(userData);
+    localStorage.setItem("role", role);
+    setUser({ token, role });
   };
 
   const logout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("role");
     setUser(null);
   };
 
-  return <AuthContext.Provider value={{ user, loading, login, logout }}>{children}</AuthContext.Provider>;
-}
+  const value = useMemo(
+    () => ({
+      user,
+      token: user?.token || "",
+      role: user?.role || null,
+      isAuthenticated: !!user?.token,
+      login,
+      logout,
+      ready,
+      setUser,
+    }),
+    [user, ready]
+  );
 
-export function useAuth() {
-  return useContext(AuthContext);
-}
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+};
+
+// Safe hook (prevents silent failures)
+export const useAuth = () => {
+  const ctx = useContext(AuthContext);
+  if (!ctx) throw new Error("useAuth must be used inside AuthProvider");
+  return ctx;
+};
