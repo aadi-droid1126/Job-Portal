@@ -1,17 +1,17 @@
 <svg width="80" height="80" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
 
   <!-- Person head -->
-  <circle cx="35" cy="30" r="10" fill="#1d4ed8"/>
+  <circle cx="35" cy="30" r="10" fill="#6366F1"/>
 
   <!-- Person body -->
-  <path d="M20 55 C20 45 50 45 50 55 L50 65 L20 65 Z" fill="#1d4ed8"/>
+  <path d="M20 55 C20 45 50 45 50 55 L50 65 L20 65 Z" fill="#6366F1"/>
 
   <!-- Growth bars -->
-  <rect x="55" y="40" width="6" height="15" fill="#3b82f6"/>
-  <rect x="65" y="35" width="6" height="20" fill="#2563eb"/>
-  <rect x="75" y="30" width="6" height="25" fill="#1d4ed8"/>
+  <rect x="55" y="40" width="6" height="15" fill="#A78BFA"/>
+  <rect x="65" y="35" width="6" height="20" fill="#8B5CF6"/>
+  <rect x="75" y="30" width="6" height="25" fill="#6366F1"/>
 
   <!-- Check swoosh -->
-  <path d="M18 60 Q45 80 80 50" stroke="#f97316" stroke-width="8" fill="none" stroke-linecap="round"/>
+  <path d="M18 60 Q45 80 80 50" stroke="#22C55E" stroke-width="8" fill="none" stroke-linecap="round"/>
 
 </svg>
